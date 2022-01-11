@@ -16,7 +16,7 @@ struct Event {
 
 impl Event {
     fn message(self) -> String {
-        format!("Hello, {}, {}", self.first_name, self.last_name)
+        format!("Hello, {} {}", self.first_name, self.last_name)
     }
 }
 
