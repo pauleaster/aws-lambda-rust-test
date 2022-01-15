@@ -1,2 +1,6 @@
 /target
 bootstrap
+.vscode/
+.terraform*
+terraform.*
+todo.txt
