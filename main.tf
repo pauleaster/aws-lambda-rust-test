@@ -4,7 +4,7 @@ provider "aws" {
 
 data "archive_file" "bootstrap-zip" {
   type        = "zip"
-  source_dir  = "./target/x86_64-unknown-linux-musl/release/"
+  source_file  = "./target/x86_64-unknown-linux-musl/release/bootstrap"
   output_path = "bootstrap.zip"
 }
 
@@ -30,7 +30,7 @@ resource "aws_iam_role" "lambda-iam" {
 
 resource "aws_lambda_function" "lambda" {
   filename         = "bootstrap.zip"
-  function_name    = "aws-lamda-test-terrform"
+  function_name    = "aws-lamda-rust-test-terraform"
   role             = aws_iam_role.lambda-iam.arn
   handler          = "lambda.lambda_handler"
   source_code_hash = data.archive_file.bootstrap-zip.output_base64sha256
@@ -58,7 +58,7 @@ resource "aws_apigatewayv2_integration" "lambda-integration" {
 
 resource "aws_apigatewayv2_route" "lambda-route" {
   api_id    = aws_apigatewayv2_api.lambda-api.id
-  route_key = "GET /{proxy+}"
+  route_key = "ANY /{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.lambda-integration.id}"
 }
 

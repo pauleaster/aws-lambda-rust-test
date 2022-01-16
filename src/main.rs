@@ -1,34 +1,28 @@
-use lambda_runtime::{Context, Error};
-use serde::{Deserialize, Serialize};
+use lambda_http::{
+    handler,
+    lambda_runtime::{self, Context, Error},
+    IntoResponse, Request, RequestExt, Response,
+};
 
 #[tokio::main]
 async fn main() -> Result<(), Error> {
-    let handler = lambda_runtime::handler_fn(handler);
-    lambda_runtime::run(handler).await?;
+    lambda_runtime::run(handler(func)).await?;
     Ok(())
 }
 
-#[derive(Deserialize)]
-struct Event {
-    first_name: String,
-    last_name: String,
+async fn func(event: Request, _: Context) -> Result<impl IntoResponse, Error> {
+    let parameters = event.query_string_parameters();
+    Ok(format!("{:?}", parameters).into_response())
 }
-
-impl Event {
-    fn message(self) -> String {
-        format!("Hello, {} {}", self.first_name, self.last_name)
-    }
-}
-
-#[derive(Serialize)]
-struct Output {
-    message: String,
-    request_id: String,
-}
-
-async fn handler(event: Event, context: Context) -> Result<Output, Error> {
-    Ok(Output {
-        message: event.message(),
-        request_id: context.request_id,
-    })
-}
+//     for (data,keys) in parameters.iter() {
+        
+//     }
+//     let opt_parameters = parameters.get_all()
+//     Ok(match event.query_string_parameters().get_all("many") {
+//         Some(parameters) => format!("{:?}", parameters).into_response(),
+//         _ => Response::builder()
+//             .status(400)
+//             .body("No parameters found".into())
+//             .expect("failed to render response"),
+//     })
+// }
