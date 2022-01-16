@@ -30,7 +30,11 @@ resource "aws_iam_role" "lambda-iam" {
 
 resource "aws_lambda_function" "lambda" {
   filename         = "bootstrap.zip"
+<<<<<<< HEAD
   function_name    = "aws-lamda-rust-test-terraform"
+=======
+  function_name    = "aws-lamda-test-terrform"
+>>>>>>> e4233f806bf4f8a90784b2201823ca77960f0631
   role             = aws_iam_role.lambda-iam.arn
   handler          = "lambda.lambda_handler"
   source_code_hash = data.archive_file.bootstrap-zip.output_base64sha256
@@ -58,7 +62,11 @@ resource "aws_apigatewayv2_integration" "lambda-integration" {
 
 resource "aws_apigatewayv2_route" "lambda-route" {
   api_id    = aws_apigatewayv2_api.lambda-api.id
+<<<<<<< HEAD
   route_key = "ANY /{proxy+}"
+=======
+  route_key = "GET /{proxy+}"
+>>>>>>> e4233f806bf4f8a90784b2201823ca77960f0631
   target    = "integrations/${aws_apigatewayv2_integration.lambda-integration.id}"
 }
 
