@@ -12,7 +12,16 @@ async fn main() -> Result<(), Error> {
 
 async fn func(event: Request, _: Context) -> Result<impl IntoResponse, Error> {
     let parameters = event.query_string_parameters();
-    Ok(format!("{:?}", parameters).into_response())
+    let mut data_string = String::default();
+    let mut keys_string = String::default();
+    for (data,keys) in parameters.iter() {
+        data_string += data;
+        keys_string += keys;
+            }
+    data_string = String::from("data: ") + &data_string;
+    keys_string = String::from("keys: ") + &keys_string;
+    let response = (data_string + &keys_string).into_response();
+    Ok(response)
 }
 //     for (data,keys) in parameters.iter() {
         
