@@ -16,6 +16,7 @@ https://xxw2x1h890.execute-api.ap-southeast-2.amazonaws.com/?key1=data1&key2=dat
 
 The response you should get is (though not necessarily in this order):
 ```
+query:
 {
     "key2": "data2",
     "key1": "data1",
