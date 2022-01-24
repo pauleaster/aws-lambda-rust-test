@@ -26,6 +26,17 @@ query:
 # How it works
 When you execute the `curl` command, enter the url in your browser, or send a `POST` to this url, the AWS API Gateway funnels your request through to the rust lambda system where it launches the rust code and returns the result. 
 
+## License
+
+Licensed under either of
+
+ * Apache License, Version 2.0
+   ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license
+   ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
+
 # Why rust????
 The rust programming language is fast and secure. The compiler works to try to eliminate as many errors as possible at compile time. For beginning rust programmers this can be somewhat frustrating, but after writing enough projects, one can greatly appreciate the reduction in errors during the compile process. The surprising thing is that often, once you get your program to compile, it works first time as expected. This is not something that I have experienced with either python or C. 
 

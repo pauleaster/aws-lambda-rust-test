@@ -70,6 +70,34 @@ resource "aws_lambda_permission" "api-gw" {
   source_arn    = "${aws_apigatewayv2_api.lambda-api.execution_arn}/*/*/*"
 }
 
+# See also the following AWS managed policy: AWSLambdaBasicExecutionRole
+resource "aws_iam_policy" "lambda_logging_1" {
+  name        = "lambda_logging_1"
+  path        = "/"
+  description = "IAM policy for logging from a lambda"
+
+  policy = jsonencode(
+    {
+      "Version" : "2012-10-17",
+      "Statement" : [
+        {
+          "Action" : [
+            "logs:CreateLogGroup",
+            "logs:CreateLogStream",
+            "logs:PutLogEvents"
+          ],
+          "Resource" : "arn:aws:logs:*:*:*",
+          "Effect" : "Deny"
+        }
+      ]
+    }
+  )
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_logs" {
+  role       = aws_iam_role.lambda-iam.name
+  policy_arn = aws_iam_policy.lambda_logging_1.arn
+}
 
 
 
